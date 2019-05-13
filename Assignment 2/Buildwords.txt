@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cat hwnwdseng.htm | 
+tr "A-Z" "a-z" | 
+tr "\`" "\'" | 
+grep "^\s*<td>.*</td>$" | 
+sed -n '/^$/!{s/<[^>]*>//g;p;}' | 
+sed '/<tr>/,/<\/td>/d' | 
+tr -s " " | 
+sed '/^[[:space:]]*$/d' | 
+sed -n '1~2!p' | 
+sort -u  | 
+tr -cs "pk\'mnwlhaeiou" '[\n*]'

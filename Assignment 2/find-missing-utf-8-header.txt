@@ -1,0 +1,4 @@
+#!/bin/bash
+
+grep -rnw -e '-*- coding: utf-8 -*-' | find $@ -type f -exec file {} + | grep UTF-8
+

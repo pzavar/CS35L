@@ -1,0 +1,88 @@
+1. export LC_ALL='C'
+-To make sure we are in the standard C locale.
+
+2. sort -u /usr/share/dict/words > words
+-Creating a file by sorting the contents of the named file and putting them
+into a file named "words" in my working directory.
+
+3. wget http://web.cs.ucla.edu/classes/winter19/cs35L/assign/assign2.html
+-downloading the contents of the assignment page as specified by the lab 
+manual.
+
+4. Output:
+a) tr -c 'A-Za-z' '[\n*]' < assign2.html
+-'tr' to translate/delete characters, '-c' to check whether the ordering is
+as specified by the arguments, 'A-Za-z' means we only output things that are
+A-Z or a-z, and '[\n*\]' means the lines that do not have those characters
+become empty lines.
+
+b) tr -cs 'A-Za-z' '[\n*]' < assign2.html
+-We implement '-cs' so we only display one empty line rather than having
+many empty lines.
+
+c) tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort
+-Same thing as before except the output is now sorted
+
+d) tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u
+-To make sure that there are no lines with duplicate keys, while also
+checking that the input file is sorted.
+
+e) tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u | comm - words
+-This command reads input from stdin and compares it with words.
+It outputs:
+column 1: lines unique to the result of the command in part 4.d
+column 2: lines unique to the file 'words'
+column 3: lines that is common to both files
+
+f) tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u | comm -23 - words
+-This one outputs lines that is only unique to the result from 4.d
+
+5. wget http://mauimapp.com/moolelo/hwnwdseng.htm
+-To download the contents of the page
+
+6. Buildwords Script:
+
+#!/bin/bash
+-this creates the script. I don't see anything happen on the screen, though.
+
+cat hwnwdseng.htm | 
+-this command pulls the htm file of the english to hawaiian words with no changes made to it yet.
+
+tr "A-Z" "a-z" | 
+-I implemented this command to replace all the uppercase letters with lowercase. 
+
+tr "\`" "\'" | 
+-this command is to replace the ASCII grave accent with the apostrophe.
+
+grep "^\s*<td>.*</td>$" | 
+-this command deals with unnecessary whitespace
+
+sed -n '/^$/!{s/<[^>]*>//g;p;}' | 
+-this command removes all the html tags. <td>, <tr> etc all disappear after I implement this command
+ 
+sed '/<tr>/,/<\/td>/d' | 
+-
+
+tr -s " " | 
+-squeezes my output
+
+sed '/^[[:space:]]*$/d' | 
+-this command gets rid of any empty lines
+
+sed -n '1~2!p' | 
+-this command starts deleting in an alternating fashion to get of all the English words. 
+I can use this since I know the pattern for English and Hawaiian words.
+
+sort -u  | 
+-this command sorted my dictionary while also removing duplicates
+
+tr -cs "pk\'mnwlhaeiou" '[\n*]'
+-this command removes any misspelled Hawaiian words
+
+7. Making the script executable
+chmod u+x
+
+./buildwords > hwords
+
+
+
