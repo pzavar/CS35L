@@ -1,0 +1,12 @@
+﻿  tr2u.c
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(29): warning C4018: '<': signed/unsigned mismatch
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(31): warning C4018: '<': signed/unsigned mismatch
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(43): warning C4013: 'read' undefined; assuming extern returning int
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(46): warning C4018: '<': signed/unsigned mismatch
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(51): warning C4013: 'write' undefined; assuming extern returning int
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(18): warning C4090: 'initializing': different 'const' qualifiers
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 5\assignment 5\tr2u.c(19): warning C4090: 'initializing': different 'const' qualifiers
+  tr2b.c
+  Generating Code...
+  Assignment 5.vcxproj -> C:\Users\Parham Zavar\Desktop\UCLA\Winter '19\COM SCI 35L\Assignments\Assignment 5\Assignment 5\Debug\Assignment 5.exe
+  Assignment 5.vcxproj -> C:\Users\Parham Zavar\Desktop\UCLA\Winter '19\COM SCI 35L\Assignments\Assignment 5\Assignment 5\Debug\Assignment 5.pdb (Partial PDB)

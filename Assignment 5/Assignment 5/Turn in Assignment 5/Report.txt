@@ -1,0 +1,100 @@
+1 and 2:
+
+For the tr2b.c program:
+
+1. First to check whether the number of given arguments (argc) is anything besides 3.
+2. I create the character pointers and assignments the argv elements 1 and 2 to them.
+3. For more error checking, I make sure the arguments 'from' and 'to' that are to be passed are the same. 
+If not, I throw an error message. I also check whether the characters passed to 'from' do not contain any duplicates.
+
+4. Before I get into my while loop, I create a char variable 'c' and take the first character using getchar()
+Then I begin my loop that checks for the exit condition 'c' being equal to the EOF.
+-I create create a variable 'i' that I use to run through all the characters in strlen(from). If the character c we are on through a single run through
+the 'for' loop is part of the argument passed to 'from', I add it to 'to' and print it using putchar() and run again checking if we are at the EOF or not.
+
+For the tr2u.c program, everything up to #3 is the same, logic for number 4 is similar too but now, I use  
+
+This time, before getting into the loop, I create a variable that I use to read (instead of doing getchar()).
+Running through the same loop as before, but this time, and write (previously putchar()) is outside the for loop, and I reassign 'ww' to read the next 
+variable.
+It runs through the while loop until we are at the end of file, each time printing one character.
+On the terminal, I compile both programs using "gcc -std=c11 -g tr2X.c -o tr2X" with X being either 'b' or 'u' depending on which program I was compiling.
+After fixing if there were any errors and getting rid of as many warnings, I begin testing my programs.
+
+Then, using the ls command, I saw that there was now a new file created called 'a.out' that contains the compiled versions of tr2b.c and tr2u.c.
+(i.e. when I compile tr2b.c, a.out contains the compiled tr2b.c file. Vice versa.)
+
+I tested my program with the command "echo "ABCabcABC" | ./a.out 'abc' 'pqr'" and yielded "ABCpqrABC", which is my desired output. 
+I repeated this test for tr2u.c, implementing the same steps as for tr2b.c. Same output. 
+
+Testing with a big file as well, I implemented the command 'head --bytes=5000000 /dev/urandom > input.txt' that is from the TA slides.
+
+3: Strace-ing
+
+a) Copying to a file:
+For the tr2b program (buffered) copying to a file, I implemented the following command for the tr2b program (buffered):
+'strace -c -o calls1.txt ./tr2b '?#' 'ab' < input.txt > outputb.txt'. Using 'nano calls1.txt', I saw that it resulted in only 26 calls.
+
+For the tr2u program (unbuffered), I implemented:
+'strace -c -o calls2.txt ./tr2u '?#' 'ab' < input.txt > outputu.txt'. It resulted in 10000024 calls. They were about equally divided between the write 
+and read syscalls.
+
+b) Copying to the terminal:
+For tr2b, the command I used was:
+'strace -c -o calls3.txt ./tr2b '?#' 'ab' < input.txt'. Using 'nano calls3.txt' It resulted in 29 calls. 3 more than before.
+
+For tr2u, the command:
+'strace -c -o calls4.txt ./tr2u '?#' 'ab' < input.txt'. My terminal finally stopped running after a few mins, and again using 'nano calls4.txt', it 
+resulted in 10000024 calls again.
+
+Discussion for the calls using strace:
+There isn't any question as to which method (buffered vs unbuffered) is more efficient. It is clearly the buffered method. It is undoubtedly smarter to 
+use the buffered method in situations that require taking input and generating output, regardless of whether that's copying onto another file or onto the
+terminal.
+
+4. Time:
+
+Copying into a file:
+For tr2b, I recompiled it and used the command: "time cat input.txt | ./tr2b '?#' 'ab' > outputb.txt" and this resulted in the following:
+real    0m0.007s
+user    0m0.000s
+sys     0m0.004s
+
+For tr2u, after compiling, "time cat input.txt | ./tr2u '?#' 'ab' > outputu.txt" resulted in:
+real    0m9.994s
+user    0m1.352s
+sys     0m8.657s
+
+Copying to the terminal:
+For tr2b, "time cat input.txt | ./tr2b '?#' 'ab'" resulted in:
+real    0m0.003s
+user    0m0.000s
+sys     0m0.003s
+
+For tr2u, "time cat input.txt | ./tr2u '?#' 'ab'" resulted in:
+real    0m10.337s
+user    0m1.265s
+sys     0m8.025s
+
+Discussion for time:
+Again, the buffered method using getchar() and putchar() is more efficient time-wise as well as using a smaller number of calls. It is the preferred 
+method when taking inputs and outputting and should be used in the place of the unbuffered method that utilizes read() and write() commands.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
