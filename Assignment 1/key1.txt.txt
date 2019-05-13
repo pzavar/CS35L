@@ -1,0 +1,70 @@
+Exercise 1.1:
+
+1. C-x 4 C-f exer1.html
+2. C-s HTML
+3. C-s scavenger C-s C-u 9 C-b
+4. C-s self-referential C-s C-u 16 C-b
+5. C-s arrow C-s C-u 5 C-b
+6. C-e
+7. C-a
+8. I used emacs commands
+9. see 8
+10. C-x C-c
+
+Exercise 1.2:
+
+1. C-x 4 C-f exer2.html
+2. C-u 18 C-n C-SHIFT-<backspace>
+3. C-s DELETE C-SHIFT-<backspace>
+4. C-s https://en.wiki M-k
+5. C-s <! C-SHIFT-<backspace> I do this 3 times.
+C-s <! C-u 6 C-d 
+C-s <! C-SHIFT-<backspace> I do this 3 times
+
+Exercise 1.3:
+
+1. C-x 4 C-f exer3.html
+2. M-x repl s<return> Assignment 1 <return> Assignment 42 <return>
+3. M-x repl s<return> UTF-8 <return> US-ASCII <return>
+4. C-s UTF
+5. C-s </o> C-o
+6. C-x s C-x C-c y
+
+Exercise 1.4:
+
+1. cat exer2.html exer2.diff
+ >exer4.html
+
+2. 
+emacs exer4.html
+
+3. M-r
+C-r < ! Enter C-@ C-s - > M-w
+M-g g 3 3 9 Enter M-b M-b M-f C-y
+
+4. M-r C-r C-r < ! Enter C-@ C-e C-n C-n M-w
+M-g g 3 0 1 Enter C-y C-a C-d C-p C-d
+M-> C-r M-p C-r C-r C-r Enter C-@ C-e M-w
+M-g g 9 4 Enter C-y
+M-> C-r M-p C-r C-r C-r C-r Enter C-@ C-e M-w
+M-g g 1 8 Enter C-y
+
+5. M-> C-r
+C-r - - - C-r Enter Backspace
+
+6. C-_
+
+7. <!-- C-o M-% --> --> <!-- y y y y M-> -->
+
+8. M-x repl s<return> <ol> <return> <oL> <return>
+
+9. diff -u exer1.html exer4.html
+>exer4.diff
+Correct.
+
+Exercise 1.5:
+
+
+
+
+
