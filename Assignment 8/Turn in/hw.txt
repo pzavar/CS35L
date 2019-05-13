@@ -1,0 +1,20 @@
+1. That is the entire point of the private key. Others don't have access to this private key, so they won't be able to decrypt the messages being sent,
+and so the network is still secure.
+
+(1) If they had all our keystrokes, then the network is no longer secure. This is regardless of it taking place after all the cient-server setup is completed.
+They could still get the passphrase and get access to our private key, thereby being able to decrypt messages being sent and delivered.
+
+(2) This would not be secure as they would have access to the .ssh files and they could use that to figure out the public and private keys. 
+This gives them control over our login and so they can now decrypt our communication.
+
+2. The gpg2 --verify doesn't compare the message sent vs the message received. Need to find a way to compare 
+the message sent vs message received to fix the issue.
+
+The function of the gpg2 --verify is to check the target file and its detached signature matching or not.
+The message should be sent openly (so anyone on the server can read it) but they should NOT be able to change it.
+This is related the integrity of the data being transferred. If a hacker gets the private key and modifies the information, he can create a different signature 
+than the original one. As a result, the gpg2 --verify will simply 'verify' the detatched signatures and the file matching. This does not help in 
+figuring out whether the data has integrity or not. 
+
+You could get rid of this issue by literally having direct communicationn (face-to-face/some other trusted way of communicating) to compare the ownership of
+the file.

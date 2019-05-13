@@ -1,0 +1,48 @@
+Name: Parham Hajzavar
+UID: 405181239
+My Partner's Name: Alex Littaua
+My Partner's UID: 405146830
+
+1. I set up my BeagleBone by following the steps highlighted to us on Piazza. I download the necessary drivers, connect to the correct wifi, and install 
+xauth and xvfb for X11 forwarding support for future SSH connections to my BeagleBone. Finally, I download Firefox to have a browser with GUI support.
+
+2. I set up a password to log into my board for safety and set the password to: Potato1376
+
+3. I download xterm using "apt-get install xterm". I already downloaded xauth when I was setting up my BeagleBone using the steps outlined on Piazza (step 1)
+
+4. I set my hostname by using "hostname hajzavar-BeagleBone" and set my password using passwd to make sure it's safe.
+password: Potato1376
+
+5. Using my partner's IP and password, I SSH into his BeagleBone. He does the same to my BeagleBone.
+
+My IP: 10.97.85.54
+My passphrase: Potato1376
+My partner's IP: 10.97.85.45
+My partner's passphrase: hackmydog3760
+
+5. Being the server, I follow the steps required to generate the public and private keys. Using the slides:
+ssh-keygen (to generate the public and private keys)
+sudo useradd -d /home/ClientLogIn -m ClientLogIn (set up username for client)
+sudo passwd ClientLogIn (set up the password for client)
+sudo mkdir /home/ClientLogIn/ .ssh (make directory for client)
+cd /home/ClientLogIn (going into that directory)
+sudo chown -R ClientLogIn .ssh (to change ownership and permission on directory)
+sudo chmod 700 ssh (continuation of above step)
+
+Going into my partner's host, I type ClientLogIn@10.97.85.45 and type xterm. The correct xterm window pops up.
+
+6. For the key generation, I type "ssh-keygen" to generate a public and private key pair.
+
+7. To copy my public key to the server for key-based authentication:
+ssh-copy-id -i ClientLogIn@10.97.75.54
+
+Then I add the private key authentication agent using "ssh-add"
+
+Finally, I SSH into the correct server using:
+ssh ClientLogIn@10.97.85.54
+ssh -X ClientLogIn@10.97.85.54 (for the X11 forwarding)
+
+8. Running the following commands all popped up the correct windows, so it's correct.
+xterm
+gedit
+firefox
