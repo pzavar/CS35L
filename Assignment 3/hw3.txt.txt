@@ -1,0 +1,16 @@
+3. We cannot output random lines on the given file. The compiler gives an error "IndexError: list index out of range" when calling the chooseline function.
+We are not specifying the number of lines to be zero and the /dev/null file doesn't have any lines, so the compiler throws the error.
+
+4. It yields the following when I ran it on python3:
+"[hajzavar@lnxsrv06 ~]$ python3 randline.py
+  File "randline.py", line 65
+    except IOError as (errno, strerror):
+                      ^
+SyntaxError: invalid syntax
+[hajzavar@lnxsrv06 ~]$
+"
+This is based on the changes made to Python3 that were not evident in Python2.
+The line throwing the error "except IOError as (errno, strerror):" is the problem.
+For it to work on Python3, it should be the following:
+"except OSError as err:"
+source: http://python-future.org/compatible_idioms.html

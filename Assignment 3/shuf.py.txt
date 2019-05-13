@@ -1,0 +1,95 @@
+#!/usr/bin/python
+import random, sys
+from optparse import OptionParser
+
+# --input-range(-i) implemented below
+
+#class iAction(argparse.Action):
+#defining a function that basically does the work for the -i command
+   # def __init__(self,lo,hi,dest,type):
+    #    if (lo>hi or hi<0 or lo<0):
+   #         return 0
+  #      numbers=list(range(lo,hi+1))
+ #       for x in numbers:
+#            sys.stdout.write(random.x(numbers))
+#the above loop prints numbers in the range but randomly
+
+class shuf:
+    def __init__(self,lo,hi,repeating,numb,dest,type):
+        lo=0
+        hi=0
+        repeating=0
+        num=0
+    def INPUT_RANGE(lo,hi):
+        INPUT_RANGE=list(range(lo,hi+1))
+        for x in INPUT_RANGE:
+            sys.stdout.write(random.x(INPUT_RANGE))
+    
+    def headCounting(lo,hi,numb):
+        while numb<INPUT_RANGE:
+            counter=0
+            while(counter<numb):
+                sys.stdout.write(random.numb(INPUT_RANGE))
+                counter+=1
+
+   # def Repeater(lo,hi,numb,repeating):
+   #    counter=0
+   #incomplete function implementing -r
+        
+        
+                                   
+def main():
+    version_msg="$prog 2.0"
+    #usage_msg=
+    
+    # :(
+   
+    
+    
+    parser=argparse.ArgumentParser(Description="""Usage: shuf [OPTION]... [FILE]
+  or:  shuf -e [OPTION]... [ARG]...
+  or:  shuf -i LO-HI [OPTION]...
+Write a random permutation of the input lines to standard output.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -e, --echo                treat each ARG as an input line
+  -i, --input-range=LO-HI   treat each number LO through HI as an input line
+  -n, --head-count=COUNT    output at most COUNT lines
+  -o, --output=FILE         write result to FILE instead of standard output
+      --random-source=FILE  get random bytes from FILE
+  -r, --repeat              output lines can be repeated
+  -z, --zero-terminated     end lines with 0 byte, not newline
+      --help     display this help and exit
+      --version  output version information and exit
+
+With no FILE, or when FILE is -, read standard input.
+
+GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
+For complete documentation, run: info coreutils 'shuf invocation'
+   )"""
+    parser=OptionParser(version=version_msg,usage=usage_msg)
+    parser.add_argument('-i','--input-range',action="store",type="int",dest="input_range",help="Output RANGE_INPUT (no default)")
+    
+    parser.add_argument('-n','--head-count',action="store",type="int",dest="count",default=input_range,help="Output COUNT lines (Default is all of them)")
+
+    parser.add_argument('-r','--repeat',action="store",type="int",dest="repeat",default=0,help="Output REPEAT lines (default = 0)")
+
+    try:
+        input_range=int(options.input_range)
+    except:
+        parser.error("Invalid INPUT_RANGE: {0}".format(options.input_range))
+    if hi<0 or lo<0:
+        parser.error("Negative count: {0}".format(options.input_range))
+    if lo>hi:
+        parser.error("Lo can't be bigger than hi: {0}".format(options.input_range))
+    if len(lo)!=1 or len(hi)!=1 or len(numb)!=1 or len(repeating)!=1:
+        parser.error("Wrong number of operands: {0}".format(options.input_range)
+        parser.error(.format(options.count))
+        parser.error(.format(options.repeat))
+    if repeating<0 or numb<0:
+        parser.error("Cannot be zero: {0}".format(options.repeating))
+
+    input_file=args[2]
+
+if __name__ == "__main__":
+    main()
