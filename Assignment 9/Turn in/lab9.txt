@@ -1,0 +1,77 @@
+1. To start, I first needed to get a copy of the Diffutils repository that we will be using:
+git clone https://git.savannah.gnu.org/git/diffutils.git
+
+2. I then needed to get a log of the changes made to the Diffutils' master and put it into the file git-log.txt:
+cd diffutils
+git log > ../git-log.txt
+
+3. Also have to generate a list of tags used for Diffutils and put it into the file git-tags.txt:
+git tag > ../git-tags.txt
+
+4. To find that specific command, generate the patch for its commit, and put the output into the file quote_patch.txt:
+git log --grep="maint: quote" | grep commit
+commit 62ca21c8c1a5aa3488589dcb191a4ef04ae9ed4f
+git show 62ca21c8c1a5aa3488589dcb191a4ef04ae9ed4f > ../quote_patch.txt
+
+5. Checking out version 3.0 of Diffutils for my repository:
+git checkout v3.0
+
+6. I use the patch command to apply the quote_patch.txt to version 3.0 and skip past the steps that it is not able to figure out what file to patch:
+patch -p1 < ../quote_patch.txt
+<RETURN>
+y
+<RETURN>
+y
+<RETURN>
+y
+
+7. I want the overview of what happened:
+git status
+
+8. Learned about vc-diff (C-x v =), vc-revert (C-x v u), describe-mode (C-h m), diff-apply-hunk (C-c C-a), and diff-go-to-source (C-c C-c).
+
+9. I used vc-revert (C-x v u, yes) to revert all the changes to the files that are NOT .c. For the .c files, I used vc-diff (C-x v =) to see the previous
+versions of the files and for every change of ` to ' that was not between "", I did the opposite. In other words, where I saw ' that used to be `, I 
+changed it back to `, given it was not between "". I did that for all the .c files.
+
+10. I now examine the files the rejected files and copy the rejected patches into the corresponding .c files. I emacs'd all the .c.rej files and find that
+only src/diff.c and src/diff3.c faced this issue. I see where they were rejected and and fix it in the .c versions of the files.
+
+11. I remove all the untracked files that git warned me about as they wouldn't be added to my patch:
+git clean -f
+
+12. When you’re done with the above, git status should report a half-dozen modified files, and git diff should output a patch that is three 
+or four hundred lines long. Put that patch into a file quote-3.0-patch.txt.
+[~/diffutils]> git diff > ../quote-3.0-patch.txt
+
+12. I put the git diff patch into quote-3.0-patch.txt:
+git diff > quote-3.0-patch.txt
+
+I check if the correct files are there:
+git status
+I see the 6 .c files, as I am supposed to.
+
+13. I read README-hacking. I then apply the following commands:
+./bootstrap
+wget https://web.cs.ucla.edu/classes/winter19/cs35L/assign/diffutils-gets.diff (since I was in lnxsrv9)
+patch -p0 < ../diffutils-gets.diff
+./configure
+make
+make check
+
+14. I compare the source code of Diffutils 3.0 to the source code of the modified version. I also put the former source code into a directory diffutils 3.0
+and the latter source code into a directory diffutils-3.0-patch, and then I run my implementation of diff:
+cd ..
+git clone https://git.savannah.gnu.org/git/diffutils.git diffutils-3.0
+cd diffutils-3.0
+git checkout 'v3.0'
+cd ..
+mkdir diffutils-3.0-patch
+cp ./diffutils/src/*.c ./diffutils-3.0-patch/
+comparing:
+./diffutils/src/diff -pru diffutils-3.0/src diffutils-3.0-patch > quote-3.0-test.txt
+
+15. I use the diff to compare the contents of quote-3.0-test.txt and quote-3.0-patch.txt:
+diff -u quote-3.0-test.txt quote-3.0-patch.txt
+
+I find that they are different but the differences are indeed innocuous. The patch worked fine.

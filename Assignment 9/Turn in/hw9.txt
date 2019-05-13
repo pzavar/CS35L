@@ -1,0 +1,44 @@
+1. To check out version 3.0 of Diffutils from my repository into the new
+branch "quote":
+cd diffutils
+git checkout v3.0 -b quote
+
+2. Installing my change to the new branch and running the patch command 
+with the patch quote-3.0-patch.txt as input:
+patch -p1 < ../quote-3.0-patch.txt
+
+3. I studied the add-change-log-entry-other-window (C-x 4 a) function
+
+4. I open the ChangeLog file and implement the above command. I then
+note what I did in the lab to the .c files (changed ' to ` in the appropriate
+places)
+*see lab9.txt for more details on the exact changes
+
+5. I commit the changes to the new branch:
+git add .
+git commit -F ChangeLog
+
+6. Using the given command, I generate a file formatted-patch.txt:
+git format-patch -1 --stdout > formatted-patch.txt
+
+7. I emailed my patch to Jonathan and he emailed his to me.
+git am < JohnPatch.txt
+./bootstrap
+wget https://web.cs.ucla.edu/classes/winter19/cs35L/assign/diffutils-gets.diff (since I was in lnxsrv9)
+patch -p0 < ../diffutils-gets.diff
+(I need the above patch as I was in lnxsrv09)
+make
+make check
+
+8. To verify that the ChangeLog works:
+make distdir
+cd diffutils-3.0.1-35c1 
+emacs ChangeLog
+
+9. I have Xqartz running and enable X11 forwarding in my PuTTy settings:
+export PATH=/usr/local/cs/bin:$PATH
+cd ~eggert/src/gnu/emacs
+gitk
+
+
+

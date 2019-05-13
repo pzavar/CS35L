@@ -1,0 +1,19 @@
+I studied the window that pops up and referred to my TA's slides to find the answers:
+
+Top-left: the commits added. In order:
+-current commit (HEAD)
+-local branch "master"
+-remote branch master on origin
+-commit message
+
+Top-middle: commit authors
+
+Top-right: dates of the commits being added
+
+Middle until bottom:
+-used to go to the next and previous commits
+-search box for the commits
+-the diff and ChangeLog entries
+-used to select what diff files to see in first window
+-file changes in diff format
+-files impacted by selected commit
