@@ -1,0 +1,123 @@
+Note: things not commented are considered commands. Thing commented are pseudocode of what I did.
+
+1. First compiling coreutils with bug:
+
+wget https://web.cs.ucla.edu/classes/winter19/cs35L/assign/coreutils-with-bug.tar.gz
+tar -xvzf coreutils-with-bug
+cd coreutils-with-bug
+./configure
+make
+make install
+ls src/ls
+//I run into errors. 
+
+2. Applying the patch to fix the error during compilation:
+
+wget http://web.cs.ucla.edu/classes/winter19/cs35L/assign/coreutils.diff
+patch -p0 < coreutils.diff
+//patch successfully added
+//trying again
+make
+make install
+ls src/ls
+// no errors this time
+
+3. Reproducing the bug:
+
+tmp=$(mktemp -d)
+cd $tmp
+touch -d '1918-11-11 11:00 GMT' wwi-armistice
+touch now
+sleep 1
+touch now1
+TZ=UTC0 ls -lt --full-time wwi-armistice now now1
+//I don't get the correct result. It makes it look like the past is the future.
+//This seems to be an issue with the way the sorting is set.
+
+4. Trying to find the bug using GDB debugging:
+
+./configure CFLAGS='-g -O0'
+make CFLAGS='-g -O0' 
+cd src
+gdb ls
+info functions
+//I found a sort_files function, so I should probably set the breakpoint there and see what's inside
+//I step through the program and see it is calling a function called compare_mtime.
+//I set a breakpoint at that function and step through again
+//compare_mtime itself called cmp_mtime
+//Same process again. Stepping through 
+break cmp_mtime
+run -lt
+s
+s
+s
+//There is a timespec.h file being used. Let's find that and pull that up.
+cd
+cd coreutils-with-bug
+ls
+cd lib
+emacs timespec.h
+//the function "static inline int timespec_cmp(struct timespec a, struct timespec b)" seems to be the issue, so I should study what it's supposed to do, 
+//and whether this is the source of the bug.
+/* Return negative, zero, positive, if A<B, A==B, A>B, respectively.
+Assume the nanosecond components are in range, or close to it */
+^what it's supposed to do. There is a subtraction of integers and the result used to decide what to return (-1, 1 or 0)
+
+/*I googled when the linux time started, and it was January 1st 1970. The time we are using is 1918 so that is why it is messed up.
+There seems to be integer overflow, so how can I implement what the function is asking without doing subtraction? Quite simply, I use <,>, and == to compare
+them instead of using their difference. */
+
+5. Fixing the bug:
+
+//I make a new file and copy the contents of timespec.h there.
+cp timespec.h newtimespec.h
+emacs newtimespec.h
+//making the changes to timespec function here. The changes I made her (also found on lab4.diff):
+
+static inline int timespec_cmp(struct timespec a, struct timespec b)
+{
+	if (a.tv_nsec < b.tv_nsec) { return -1; }
+	if (a.tv_nsec > b.tv_nsec) { return 1; }
+	if (a.tv_nsec == b.tv_nsec) { return 0; }
+}
+
+//Now, to add these changes from newtimespec.h to the original timespec.h
+diff -u timespec.h newtimespec.h > lab4.diff
+emacs lab4.diff
+//Changes are there. Now to make the log change too.
+C-x 4 a
+//change made
+
+6. Applying patch and testing:
+
+patch -p0 < lab4.diff
+//patch applied. Redoing the steps to configure, make, make install...
+//I got the correct result this time. (in local ls, not global ls):
+
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-07 00:46:54.142574269 +0000 now1
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-07 00:46:44.835261786 +0000 now
+-rw-r--r-- 1 hajzavar csugrad 0 1918-11-11 11:00:00.000000000 +0000 wwi-armistice
+
+7. With the SEASNet Linux servers:
+
+[hajzavar@lnxsrv06 ~/temp/coreutils-with-bug/lib]$ cd ~
+[hajzavar@lnxsrv06 ~]$ touch -d '1918-11-11 11:00 GMT' wwi-armistice
+[hajzavar@lnxsrv06 ~]$ touch now
+[hajzavar@lnxsrv06 ~]$ touch now1
+[hajzavar@lnxsrv06 ~]$ TZ=UTC0 ls -lt --full-time wwi-armistice now now1
+-rw-r--r-- 1 hajzavar csugrad 0 2054-12-17 17:28:16.000000000 +0000 wwi-armistice
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-09 00:06:17.320381000 +0000 now1
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-09 00:06:14.951163000 +0000 now
+
+/*
+It shows the year 1918 as 2054. I have previously read about the 2038 problem. This seems to be an example of that.
+The year 2054 is greater than 2038, which is when the Unix 32-bit time runs out of integers for the seconds since Jan 1 1970. 
+The SEASnet does not do very well under these conditions since it uses 64-bit. The issue is the 64-bit has a sign bit (to represent whether we are in
+the past or future), but 32-bit doesn't. That is why the year 1918 is shown as some year in the distant future.
+*/
+
+
+
+
+
+

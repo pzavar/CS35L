@@ -1,0 +1,127 @@
+1. First compiling coreutils with bug:
+commands:
+wget https://web.cs.ucla.edu/classes/winter19/cs35L/assign/coreutils-with-bug.tar.gz
+tar -xvzf coreutils-with-bug
+cd coreutils-with-bug
+./configure
+make
+make install
+ls src/ls
+// I run into errors. 
+
+2. Applying the patch to fix the error during compilation:
+commands:
+wget http://web.cs.ucla.edu/classes/winter19/cs35L/assign/coreutils.diff
+patch -p0 < coreutils.diff
+#patch successfully added
+#trying again
+make
+make install
+ls src/ls
+// no more errors this time
+
+3. Reproducing the bug:
+commands:
+tmp=$(mktemp -d)
+cd $tmp
+touch -d '1918-11-11 11:00 GMT' wwi-armistice
+touch now
+sleep 1
+touch now1
+TZ=UTC0 ls -lt --full-time wwi-armistice now now1
+
+./path to file/ls
+
+result:
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-07 00:46:54.142574269 +0000 now1
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-07 00:46:44.835261786 +0000 now
+-rw-r--r-- 1 hajzavar csugrad 0 1918-11-11 11:00:00.000000000 +0000 wwi-armistice
+// not the correct result
+
+4. 
+cd coreutils-with-bug/
+gdb src/ls
+info functions
+break qsorts
+run
+info break (get info about the breakpoints set)
+step (multiple times)
+del 1 (delete breakpoint)
+run
+_______________________________________________________________
+issue seems to be at compare_mtime function
+setting breakpoint there
+
+./configure CFLAGS='-g -O0'
+make CFLAGS='-g -O0' 
+
+cd src
+gdb ls
+info functions
+
+cmp_ctime
+
+
+
+cd src
+gdb ls
+info functions
+break cmp_mtime
+r -lt --full-time
+//stops at breakpoint set at cmp_mtime
+
+break cmp_mtime
+run -lt
+s
+s
+s
+
+cd
+cd coreutils-with-bug
+ls
+cd lib
+emacs timespec.h
+
+
+/* Return negative, zero, positive, if A<B, A==B, A>B, respectively.
+Assume the nanosecond components are in range, or close to it */
+
+static inline int timespec_cmp(struct timespec a, struct timespec b)
+{
+	if (a.tv_nsec < b.tv_nsec) { return -1; }
+	if (a.tv_nsec > b.tv_nsec) { return 1; }
+	if (a.tv_nsec == b.tv_nsec) { return 0; }
+}
+
+cp timespec.h newtimespec.h
+emacs newtimespec.h
+//make the changes to the timespec function here. make sure it's 100% correct
+diff -u timespec.h newtimespec.h > lab4.diff
+emacs lab4.diff
+patch -p0 < lab4.diff
+emacs timespec.h //patch is applied
+change log: C-x 4 a
+add the change you made to the file
+
+
+redo the steps to configure, make, make install, etc
+
+
+path=$pwd 
+
+cp lab4.diff lab4_1.diff
+(this is in coreutils/lib)
+
+8. [hajzavar@lnxsrv06 ~/temp/coreutils-with-bug/lib]$ cd ~
+[hajzavar@lnxsrv06 ~]$ touch -d '1918-11-11 11:00 GMT' wwi-armistice
+[hajzavar@lnxsrv06 ~]$ touch now
+[hajzavar@lnxsrv06 ~]$ touch now1
+[hajzavar@lnxsrv06 ~]$ TZ=UTC0 ls -lt --full-time wwi-armistice now now1
+-rw-r--r-- 1 hajzavar csugrad 0 2054-12-17 17:28:16.000000000 +0000 wwi-armistice
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-09 00:06:17.320381000 +0000 now1
+-rw-r--r-- 1 hajzavar csugrad 0 2019-02-09 00:06:14.951163000 +0000 now
+
+look up the 2038 problem as to why it prints 2054 instead
+
+
+

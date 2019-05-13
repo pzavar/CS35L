@@ -1,0 +1,12 @@
+﻿  sfrob.c
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(577): warning C4101: 'word': unreferenced local variable
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(575): warning C4101: 'fSize': unreferenced local variable
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(575): warning C4101: 'eof': unreferenced local variable
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(710): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(713): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(716): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(719): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(744): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\consoleapplication1\sfrob.c(738): warning C4715: 'ioChecker': not all control paths return a value
+  ConsoleApplication1.vcxproj -> C:\Users\Parham Zavar\Desktop\UCLA\Winter '19\COM SCI 35L\Assignments\Assignment 4\ConsoleApplication1\Debug\ConsoleApplication1.exe
+  ConsoleApplication1.vcxproj -> C:\Users\Parham Zavar\Desktop\UCLA\Winter '19\COM SCI 35L\Assignments\Assignment 4\ConsoleApplication1\Debug\ConsoleApplication1.pdb (Partial PDB)

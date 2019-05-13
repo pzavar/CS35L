@@ -1,0 +1,16 @@
+﻿  sfrob.c
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(49): warning C4087: 'ioChecker': declared with 'void' parameter list
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(98): warning C4018: '<': signed/unsigned mismatch
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(100): warning C4018: '<': signed/unsigned mismatch
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(27): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(207): note: see declaration of 'fopen'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(133): warning C4554: '^': check operator precedence for possible error; use parentheses to clarify precedence
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(134): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(135): warning C4554: '^': check operator precedence for possible error; use parentheses to clarify precedence
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(136): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(160): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(154): warning C4715: 'ioChecker': not all control paths return a value
+c:\users\parham zavar\desktop\ucla\winter '19\com sci 35l\assignments\assignment 4\c\sfrob.c(137): warning C4715: 'frobcmp': not all control paths return a value
+  tree.cpp
+tree.obj : error LNK2005: _main already defined in sfrob.obj
+C:\Users\Parham Zavar\Desktop\UCLA\Winter '19\COM SCI 35L\Assignments\Assignment 4\c\Debug\c.exe : fatal error LNK1169: one or more multiply defined symbols found
