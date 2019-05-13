@@ -1,0 +1,41 @@
+1. First, I checked the version of my sort using "sort --version" and found it to be 8.22 (>8.6) so it is able to use multiple threads.
+
+2. Next, I wanted to generate a file of random floats containing 2^24 random single-precision floating point numbers.
+Using the TA slides, the commands I used are the following:
+"x=$((2**24))" to create a variable to hold 2^24.
+"od -An -t fF -N $x < /dev/urandom | tr -s [:blank:] '\n' | sed '/^$/d' > bigfile.txt"
+This takes care of the whitespace and blank lines, as well. 
+
+3. Now, to sort.
+Using the TA slides, I first try the following command and send the output to /dev/null to dispose unwanted output streams.
+"time -p sort -g bigfile.txt > /dev/null"
+I get the following output:
+real 8.46
+user 45.67
+sys 0.20
+
+Then I run sort with --parallel and I give it thread counts 1, 2, 4, and 8.
+"time -p sort -g --parallel=#Threads bigfile.txt > /dev/null"
+
+When #Threads = 1, output is:
+real 41.98
+user 41.90
+sys 0.07
+
+When #Threads = 2, output is:
+real 22.23
+user 42.11
+sys 0.16
+
+When #Threads = 4, output is:
+real 12.90
+user 42.74
+sys 0.16
+
+When #Threads = 8, output is:
+real 8.82
+user 44.79
+sys 0.20
+
+*When using the --parallel method with number of threads equal to 8, the real-time, user-time and sys-time are almost identical to the time output when I was not using the --parallel method 
+i.e. with "time -p sort -g bigfile.txt > /dev/null".
